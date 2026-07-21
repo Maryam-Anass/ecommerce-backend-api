@@ -1,7 +1,7 @@
 # eCommerce Backend API
 
 ## Project Goal
-The goal of this project is to build a reliable, dynamic, flexiable Node.js/express REST API backed by MongoDB database for an eCommerce platform. It provides endpoints for authinticating users, managing catalog items, handling product updates, and maintaining user shopping carts.
+The goal of this project is to build a reliable, dynamic, flexible Node.js/express REST API backed by a MongoDB database for an eCommerce platform. It provides endpoints for authenticating users, managing catalog items, handling product updates, and maintaining user shopping carts.
 
 ---
 
