@@ -23,6 +23,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 
 app.use((err, req, res, next) => {
+    console.log("Error detected: ", err);
     const statusCode = err.status || 500;
     res.status(statusCode).json({
         success: false,
