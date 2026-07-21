@@ -36,4 +36,4 @@ git clone <github-repo-url>
 cd <your-project folder>
 npm install
 node seed.js
-npm start
+npm start"" 
