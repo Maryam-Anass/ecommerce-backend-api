@@ -29,6 +29,12 @@ The goal of this project is to build a reliable, dynamic, flexible Node.js/expre
 * Node.js (v14+ recommended)
 * MongoDB running locally or a MongoDB Atlas URI
 
+### Environment Variables Setup
+Create a `.env` file in the root folder and add:
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=supersecretfallbackkey123
+
 ### 1.Installation
 Clone the reposity and install dependencies:
 ```bash
