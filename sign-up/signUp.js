@@ -21,7 +21,7 @@ const registerUser = async (req, res, next) => {
             password: hashedPassword // Fixed typo: passowrd -> password
         });
 
-        const secretKey = process.env.JWT_SECRET || 'secretKeyFallBack123';
+        const secretKey = process.env.JWT_SECRET || 'supersecretfallbackkey123';
 
         const token = jwt.sign(
             { id: newUser._id, isAdmin: newUser.isAdmin },
