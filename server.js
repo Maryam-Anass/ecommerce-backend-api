@@ -20,7 +20,7 @@ app.post('/api/auth/login', clientLogin);
 app.post('/api/auth/admin/login', adminLogin);
 
 app.use('/api/products', productRoutes);
-app.use('/api/cart', cartRoutes);
+app.use('/api/carts', cartRoutes);
 
 app.use((err, req, res, next) => {
     console.log("Error detected: ", err);

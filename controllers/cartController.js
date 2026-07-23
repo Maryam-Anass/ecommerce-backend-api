@@ -1,10 +1,29 @@
 const cartService = require('../services/cartService');
 
-// Get everything currently in the user's cart
-const getCart = async (req, res, next) => {
+
+const createCart = async (req, res, next) => {
     try {
-        const userId = req.user.id; // From auth middleware
+        const userId = req.user.id;
         const cart = await cartService.getCartByUserId(userId);
+        res.status(201).json(cart);
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Get everything currently in the user's cart
+const getCartById = async (req, res, next) => {
+    try {
+        const { id } = req.params; // cart ID
+        const cart = await cartService.getCartByUserId ?
+            await cartService.getCartById(id) :
+            await cartService.getCartByUserId(req.user.id);
+
+        if (!cart) {
+            const error = new Error('Cart not found');
+            error.status = 404;
+            return next(error);
+        }
         res.status(200).json(cart);
     } catch (error) {
         next(error);
@@ -27,7 +46,7 @@ const addItemToCart = async (req, res, next) => {
 // Update the quantity of an item already in the cart
 const updateCartItemQuantity = async (req, res, next) => {
     try {
-        const userId = req.user.id; 
+        const userId = req.user.id;
         const { productId } = req.params;
         const { quantity } = req.body;
 
@@ -57,9 +76,10 @@ const removeCartItem = async (req, res, next) => {
     }
 };
 
-module.exports = { 
-    getCart, 
-    addItemToCart, 
-    updateCartItemQuantity, 
-    removeCartItem 
+module.exports = {
+    createCart,
+    getCartById,
+    addItemToCart,
+    updateCartItemQuantity,
+    removeCartItem
 };
