@@ -1,7 +1,7 @@
 const Cart = require('../models/cartModel');
 
 const getCartByUserId = async (userId) => {
-    let cart = await Cart.findOne({ userId }).populate('item.productId');
+    let cart = await Cart.findOne({ userId }).populate('items.productId');  //making it plural not singular
     if (!cart) {
         cart = await Cart.create({ userId, items: [] });
     }
