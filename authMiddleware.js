@@ -1,38 +1,50 @@
 const jwt = require('jsonwebtoken');
 
-// Middleware for any authenticated user
+const SECRET_KEY = process.env.JWT_SECRET || 'supersecretfallbackkey123';
+
+// 1. Authenticate Token Middleware
 const protect = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        const error = new Error('Access denied. No token provided.');
-        error.status = 401;
-        return next(error);
+        return res.status(401).json({
+            success: false,
+            message: 'Access denied. No token provided.'
+        });
     }
 
     const token = authHeader.split(' ')[1];
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
-        next();
+        const decoded = jwt.verify(token, SECRET_KEY);
+        req.user = decoded; // Attach user payload to req
+        next();             // Proceed to next handler
     } catch (err) {
-        const error = new Error('Invalid or expired token.');
-        error.status = 401;
-        return next(error);
+        return res.status(401).json({
+            success: false,
+            message: 'Invalid or expired token.'
+        });
     }
 };
 
-// Middleware strictly for admins
+// 2. Admin Check Middleware (Safely checks req.user)
 const verifyAdminToken = (req, res, next) => {
-    protect(req, res, () => {
-        if (!req.user.isAdmin) {
-            const error = new Error('Forbidden. Admin permissions required.');
-            error.status = 403;
-            return next(error);
-        }
-        next();
-    });
+    // Safely verify req.user exists before reading .isAdmin
+    if (!req.user) {
+        return res.status(401).json({
+            success: false,
+            message: 'Authentication required.'
+        });
+    }
+
+    if (!req.user.isAdmin) {
+        return res.status(403).json({
+            success: false,
+            message: 'Forbidden. Admin permissions required.'
+        });
+    }
+
+    next();
 };
 
 module.exports = { protect, verifyAdminToken };

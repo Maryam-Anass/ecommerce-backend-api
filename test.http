@@ -1,0 +1,22 @@
+### Register User
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "real_admin@u.com",
+  "password": "password123",
+  "isAdmin": true
+}
+
+### Add Product
+POST http://localhost:5000/api/products
+Content-Type: application/json
+Authorization: Bearer PASTE_YOUR_TOKEN_HERE
+
+{
+  "name": "Mechanical Keyboard",
+  "price": 99.99,
+  "description": "RGB Backlit",
+  "stock": 10
+}
+
